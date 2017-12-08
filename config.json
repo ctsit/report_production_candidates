@@ -1,0 +1,22 @@
+{
+   "name": "Report Production Candidates",
+   "namespace": "ReportProductionCandidatesModule\\ExternalModule",
+   "description": "This REDCap module creates and displays a list of REDCap projects that should be moved into production.",
+   "authors": [
+     {
+          "name": "Dileep Rajput",
+          "email": "rajputd@ufl.edu",
+          "institution": "CTS-IT - University of Florida"
+      },
+      {
+          "name": "Philip B. Chase",
+          "email": "pbc@ufl.edu",
+          "institution": "CTS-IT - University of Florida"
+      },
+      {
+          "name": "Tayrn Stoffs",
+          "email": "tls@ufl.edu",
+          "institution": "CTS-IT - University of Florida"
+      }
+    ]
+}
