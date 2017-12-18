@@ -24,6 +24,14 @@ class ExternalModule extends AbstractExternalModule {
     return false;
   }
 
+  private function create_stats_table() {
+    $result = ExternalModules::query("CREATE TABLE " . TABLE_NAME . " (project_id int(10), record_count int(10) UNSIGNED, saved_attribute_count int(10) UNSIGNED)");
+    if (!$result) {
+      throw new Exception("cannot create " . TABLE_NAME . " table.");
+    }
+  }
+
+
 }
 
 ?>
