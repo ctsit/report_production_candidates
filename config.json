@@ -18,5 +18,14 @@
           "email": "tls@ufl.edu",
           "institution": "CTS-IT - University of Florida"
       }
-    ]
+    ],
+	  "crons": [
+		    {
+			    "cron_name": "report_production_candidates_cron",
+			    "cron_description": "Cron that runs daily to update the redcap_project_stats table",
+			    "method": "report_production_candidates_cron",
+			    "cron_frequency": "86400",
+			    "cron_max_run_time": "1200"
+		    }
+	  ]
 }

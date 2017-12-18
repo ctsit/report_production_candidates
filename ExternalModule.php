@@ -3,11 +3,28 @@ namespace ReportProductionCandidatesModule\ExternalModule;
 
 use ExternalModules\AbstractExternalModule;
 use ExternalModules\ExternalModules;
+use REDCap;
 
 define("TABLE_NAME", "redcap_project_stats");
 
 class ExternalModule extends AbstractExternalModule {
 
+  function report_production_candidates_cron() {
+
+    try {
+      //create project stats table if it doesn't already exist
+      if(!self::check_stats_table_exists()) {
+        self::create_stats_table();
+        REDCap::logEvent("Created " . TABLE_NAME . " table for the report_production_candidates module");
+      }
+
+      //update table
+
+    } catch(Exception $e) {
+      REDCap::logEvent("Aborting report_production_candidates_cron: " . $e->getMessage());
+    }
+
+  }
 
   private function check_stats_table_exists() {
 
