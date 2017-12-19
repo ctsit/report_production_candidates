@@ -19,6 +19,15 @@
           "institution": "CTS-IT - University of Florida"
       }
     ],
+    "links" : {
+      "control-center" : [
+        {
+          "name" : "Production Candidates Report",
+          "icon" : "report",
+          "url" : "report.php"
+        }
+      ]
+    },
 	  "crons": [
 		    {
 			    "cron_name": "report_production_candidates_cron",
