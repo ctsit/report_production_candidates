@@ -15,10 +15,12 @@ class ExternalModule extends AbstractExternalModule {
       //create project stats table if it doesn't already exist
       if(!self::check_stats_table_exists()) {
         self::create_stats_table();
-        REDCap::logEvent("Created " . TABLE_NAME . " table for the report_production_candidates module");
+        REDCap::logEvent("Created " . TABLE_NAME . " table for the report_production_candidates module.");
       }
 
       //update table
+      self::update_stats_table();
+      REDCap::logEvent("report_production_candidates_cron updated the " . TABLE_NAME  . " table.");
 
     } catch(Exception $e) {
       REDCap::logEvent("Aborting report_production_candidates_cron: " . $e->getMessage());
@@ -42,9 +44,26 @@ class ExternalModule extends AbstractExternalModule {
   }
 
   private function create_stats_table() {
-    $result = ExternalModules::query("CREATE TABLE " . TABLE_NAME . " (project_id int(10), record_count int(10) UNSIGNED, saved_attribute_count int(10) UNSIGNED)");
+    $result = ExternalModules::query("CREATE TABLE " . TABLE_NAME . " (
+                                        project_id int(10) PRIMARY KEY,
+                                        saved_attribute_count int(10) UNSIGNED)");
+
     if (!$result) {
       throw new Exception("cannot create " . TABLE_NAME . " table.");
+    }
+  }
+
+  private function update_stats_table() {
+    $result = ExternalModules::query("REPLACE INTO " . TABLE_NAME . " (
+                                        project_id,
+                                        saved_attribute_count)
+                                      SELECT
+                                        project_id,
+                                        COUNT(*) AS saved_attribute_count
+                                      FROM redcap_data
+                                      GROUP BY project_id;");
+    if (!$result) {
+      throw new Exception("cannot update " . TABLE_NAME . " table.");
     }
   }
 
