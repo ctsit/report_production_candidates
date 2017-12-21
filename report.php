@@ -53,6 +53,7 @@ echo "<table class='dataTable cell-border'>
               <th>Creator</th>
               <th>Purpose</th>
               <th>Most Recent Activity</th>
+              <th>Last User</th>
             </tr>
         </thead>
         <tbody>";
@@ -87,6 +88,7 @@ foreach ($result as $project) {
 
   echo "<td>" . purpose_num_to_purpose_name($project["purpose_num"]) . "</td>";
   echo "<td>" . $project["most_recent_activity"] . "</td>";
+  echo "<td>" . get_last_user($project["project_id"]) . "</td>";
   echo "</tr>";
 }
 
