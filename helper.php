@@ -21,7 +21,7 @@ function uid_to_username($uid) {
 }
 
 function get_last_user($pid) {
-  $result = ExternalModules::query("SELECT user FROM redcap_log_event WHERE ts IN (SELECT MAX(ts) FROM redcap_log_event WHERE project_id='$pid')");
+  $result = ExternalModules::query("SELECT user FROM redcap_log_event WHERE ts IN (SELECT MAX(ts) FROM redcap_log_event WHERE project_id='$pid' AND user != '[survey respondent]')");
   if (!$result) {
     return false;
   }
