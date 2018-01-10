@@ -92,7 +92,9 @@ foreach ($result as $project) {
 
   echo "<td>" . purpose_num_to_purpose_name($project["purpose_num"]) . "</td>";
   echo "<td>" . $project["most_recent_activity"] . "</td>";
-  echo "<td>" . get_last_user($project["project_id"]) . "</td>";
+
+  $last_user = get_last_user($project["project_id"]);
+  echo "<td><a href='mailto:" . get_user_email($last_user) . "'>" . $last_user . "</a></td>";
   echo "</tr>";
 }
 
