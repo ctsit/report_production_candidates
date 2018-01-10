@@ -13,6 +13,7 @@ $sql = "SELECT
           DATEDIFF(NOW(), redcap_projects.creation_time) AS age,
           redcap_projects.project_pi_firstname,
           redcap_projects.project_pi_lastname,
+          redcap_projects.project_pi_email,
           redcap_projects.created_by AS creator_id,
           redcap_projects.purpose AS purpose_num,
           redcap_projects.last_logged_event AS most_recent_activity
@@ -78,13 +79,13 @@ foreach ($result as $project) {
   if(empty($project['project_pi_firstname'])) {
     echo "<td> No Data </td>";
   } else {
-    echo "<td>" . $project["project_pi_firstname"] . " " . $project["project_pi_lastname"] . "</td>";
+    echo "<td><a href='mailto:" . $project['project_pi_email'] . "'>" . $project["project_pi_firstname"] . " " . $project["project_pi_lastname"] . "</td>";
   }
 
-  //convert creator_id into a username. Conversion can potentially fail
-  $creator_name = uid_to_username($project["creator_id"]);
-  if($creator_name) {
-      echo "<td>" . $creator_name . "</td>";
+  //convert creator_id into contact info. Conversion can potentially fail
+  $creator_username = uid_to_username($project["creator_id"]);
+  if($creator_username) {
+      echo "<td><a href='mailto:" . get_user_email($creator_username) . "'>" . $creator_username . "</a></td>";
   } else {
       echo "<td>Could not find creator's name</td>";
   }
