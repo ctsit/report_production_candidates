@@ -29,4 +29,13 @@ function get_last_user($pid) {
   return $result->fetch_assoc()["user"];
 }
 
+ function get_user_email($username) {
+   $result = ExternalModules::query("SELECT user_email FROM redcap_user_information WHERE username='$username'");
+   if (!$result) {
+     return false;
+   }
+
+   return $result->fetch_assoc()["user_email"];
+ }
+
 ?>
