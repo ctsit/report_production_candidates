@@ -65,8 +65,11 @@ foreach ($result as $project) {
   echo $odd_row ? "<tr class='odd'>" : "<tr class='even'>";
   $odd_row = !$odd_row;
 
-  echo "<td>" . $project["project_id"] . "</td>";
-  echo "<td>" . $project["project_name"] . "</td>";
+  //create link to project page
+  $link = "../ProjectSetup/index.php?pid=" . $project["project_id"];
+
+  echo "<td><a href='" . $link . "'>" . $project["project_id"] . "</a></td>";
+  echo "<td><a href='" . $link . "'>" . $project["project_name"] . "</a></td>";
   echo "<td>" . $project["record_count"] . "</td>";
   echo "<td>" . $project["saved_attribute_count"] . "</td>";
   echo "<td>" . $project["age"] . "</td>";
