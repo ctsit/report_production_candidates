@@ -28,7 +28,7 @@ class ExternalModule extends AbstractExternalModule {
   }
 
   //checks if project stats table exists
-  private function check_stats_table_exists() {
+  function check_stats_table_exists() {
     $result = ExternalModules::query("SHOW TABLES LIKE '" . TABLE_NAME  . "'");
 
     if(!$result) {

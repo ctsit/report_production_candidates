@@ -4,6 +4,12 @@ use ExternalModules\ExternalModules;
 require_once APP_PATH_DOCROOT . 'ControlCenter/header.php';
 require_once 'helper.php';
 
+//Run the cron if it has not ran for the first time
+$module = new ReportProductionCandidatesModule\ExternalModule\ExternalModule();
+if (!$module::check_stats_table_exists()) {
+  $module::report_production_candidates_cron();
+}
+
 //get data from db
 $sql = "SELECT
           redcap_projects.project_id,
