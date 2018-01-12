@@ -45,6 +45,7 @@ $result = $result->fetch_all(MYSQLI_ASSOC);
 echo "<table class='dataTable cell-border'>
         <thead>
             <tr>
+              <th></th>
               <th>PID</th>
               <th>Project Name</th>
               <th>Records</th>
@@ -65,6 +66,8 @@ foreach ($result as $project) {
   //style each row appropriately
   echo $odd_row ? "<tr class='odd'>" : "<tr class='even'>";
   $odd_row = !$odd_row;
+
+  echo "<td><a href='../../plugins/go_prod/?pid=" . $project["project_id"] . "' class='btn btn-default'>Go to Prod</td>";
 
   //create link to project page
   $link = "../ProjectSetup/index.php?pid=" . $project["project_id"];
