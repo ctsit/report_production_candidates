@@ -6,8 +6,8 @@ require_once 'helper.php';
 
 //Run the cron if it has not ran for the first time
 $module = new ReportProductionCandidatesModule\ExternalModule\ExternalModule();
-if (!$module::check_stats_table_exists()) {
-  $module::report_production_candidates_cron();
+if (!$module->check_stats_table_exists()) {
+  $module->report_production_candidates_cron();
 }
 
 //get data from db
@@ -88,13 +88,16 @@ foreach ($result as $project) {
   if(empty($project['project_pi_firstname'])) {
     echo "<td> No Data </td>";
   } else {
-    echo "<td><a href='mailto:" . $project['project_pi_email'] . "'>" . $project["project_pi_firstname"] . " " . $project["project_pi_lastname"] . "</td>";
+    $link = $module->get_mailer_link($project['project_pi_email']);
+    echo "<td><a href='" . $link . "'>" . $project["project_pi_firstname"] . " " . $project["project_pi_lastname"] . "</td>";
   }
 
   //convert creator_id into contact info. Conversion can potentially fail
   $creator_username = uid_to_username($project["creator_id"]);
   if($creator_username) {
-      echo "<td><a href='mailto:" . get_user_email($creator_username) . "'>" . $creator_username . "</a></td>";
+      $email = get_user_email($creator_username);
+      $link = $module->get_mailer_link($email);
+      echo "<td><a href='mailto:" . $link . "'>" . $creator_username . "</a></td>";
   } else {
       echo "<td>Could not find creator's name</td>";
   }
@@ -103,7 +106,9 @@ foreach ($result as $project) {
   echo "<td>" . $project["most_recent_activity"] . "</td>";
 
   $last_user = get_last_user($project["project_id"]);
-  echo "<td><a href='mailto:" . get_user_email($last_user) . "'>" . $last_user . "</a></td>";
+  $email = get_user_email($last_user);
+  $link = $module->get_mailer_link($email);
+  echo "<td><a href='mailto:" . $link . "'>" . $last_user . "</a></td>";
   echo "</tr>";
 }
 

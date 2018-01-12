@@ -69,7 +69,25 @@ class ExternalModule extends AbstractExternalModule {
     }
   }
 
+  function get_mailer_link($email) {
+    $cc = $this->getSystemSetting("rpc_cc");
+    $subject = $this->getSystemSetting("rpc_subject");
+    $body = $this->getSystemSetting("rpc_body");
 
+    $link = "mailto:" . $email . "?cc=";
+
+    for($i = count($cc) - 1; $i >= 0; $i--) {
+      $link .= $cc[$i];
+      if($i > 0) {
+        $link .= ";";
+      }
+    }
+
+    $link .= "&subject=" . rawurlencode($subject);
+    $link .= "&body=" . rawurlencode($body);
+
+    return $link;
+  }
 }
 
 ?>

@@ -27,7 +27,29 @@
           "url" : "report.php"
         }
       ]
-    },
+    },"system-settings" : [
+          {
+            "key": "rpc_cc",
+            "name": "CC address",
+            "required": false,
+            "type": "text",
+            "repeatable": true
+          },
+          {
+            "key": "rpc_subject",
+            "name": "Subject",
+            "required": false,
+            "type": "text",
+            "repeatable": false
+          },
+          {
+            "key": "rpc_body",
+            "name": "Body",
+            "required": false,
+            "type": "textarea",
+            "repeatable": false
+          }
+        ],
 	  "crons": [
 		    {
 			    "cron_name": "report_production_candidates_cron",
