@@ -69,17 +69,12 @@ echo "<table class='dataTable cell-border'>
 $odd_row = true;
 foreach ($result as $project) {
 
-  //style each row appropriately
+  $proj_link = "../ProjectSetup/index.php?pid=" . $project["project_id"];
+
   echo $odd_row ? "<tr class='odd'>" : "<tr class='even'>";
-  $odd_row = !$odd_row;
-
   echo "<td><a href='../../plugins/go_prod/?pid=" . $project["project_id"] . "' class='btn btn-default'>Go to Prod</td>";
-
-  //create link to project page
-  $link = "../ProjectSetup/index.php?pid=" . $project["project_id"];
-
-  echo "<td><a href='" . $link . "'>" . $project["project_id"] . "</a></td>";
-  echo "<td><a href='" . $link . "'>" . $project["project_name"] . "</a></td>";
+  echo "<td><a href='" . $proj_link . "'>" . $project["project_id"] . "</a></td>";
+  echo "<td><a href='" . $proj_link . "'>" . $project["project_name"] . "</a></td>";
   echo "<td>" . $project["record_count"] . "</td>";
   echo "<td>" . $project["saved_attribute_count"] . "</td>";
   echo "<td>" . $project["age"] . "</td>";
@@ -110,6 +105,9 @@ foreach ($result as $project) {
   $link = $module->get_mailer_link($email);
   echo "<td><a href='mailto:" . $link . "'>" . $last_user . "</a></td>";
   echo "</tr>";
+
+  //update row to maintain consistant css
+  $odd_row = !$odd_row;
 }
 
 echo "</tbody></table>";
