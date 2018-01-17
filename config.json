@@ -46,7 +46,7 @@
             "key": "rpc_body",
             "name": "Body",
             "required": false,
-            "type": "rich-text",
+            "type": "textarea",
             "repeatable": false
           }
         ],
