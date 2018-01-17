@@ -66,6 +66,7 @@ echo "<table class='dataTable cell-border'>
         </thead>
         <tbody>";
 
+//print table body
 $odd_row = true;
 foreach ($result as $project) {
 
@@ -87,7 +88,7 @@ foreach ($result as $project) {
     echo "<td><a href='" . $link . "'>" . $project["project_pi_firstname"] . " " . $project["project_pi_lastname"] . "</td>";
   }
 
-  //convert creator_id into contact info. Conversion can potentially fail
+  //sometimes creators can not be found on the system so we format output accordingly
   $creator_username = uid_to_username($project["creator_id"]);
   if($creator_username) {
       $email = get_user_email($creator_username);
@@ -97,9 +98,11 @@ foreach ($result as $project) {
       echo "<td>Could not find creator's name</td>";
   }
 
+  //print out project purpose and the when the most recent activity was
   echo "<td>" . purpose_num_to_purpose_name($project["purpose_num"]) . "</td>";
   echo "<td>" . $project["most_recent_activity"] . "</td>";
 
+  //print out last project user
   $last_user = get_last_user($project["project_id"]);
   $email = get_user_email($last_user);
   $link = $module->get_mailer_link($email);

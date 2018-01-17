@@ -9,6 +9,7 @@ define("TABLE_NAME", "redcap_project_stats");
 
 class ExternalModule extends AbstractExternalModule {
 
+  //main cron executed by redcap every day
   function report_production_candidates_cron() {
     try {
       //create project stats table if it doesn't already exist
@@ -24,7 +25,6 @@ class ExternalModule extends AbstractExternalModule {
     } catch(Exception $e) {
       REDCap::logEvent("Aborting report_production_candidates_cron: " . $e->getMessage());
     }
-
   }
 
   //checks if project stats table exists
@@ -69,6 +69,8 @@ class ExternalModule extends AbstractExternalModule {
     }
   }
 
+  /*takes in an email and returns a properly formated email link while also
+    adhearing to the template provided by the user.*/
   function get_mailer_link($email) {
     $cc = $this->getSystemSetting("rpc_cc");
     $subject = $this->getSystemSetting("rpc_subject");
@@ -76,6 +78,7 @@ class ExternalModule extends AbstractExternalModule {
 
     $link = "mailto:" . $email . "?cc=";
 
+    //add emails in cc list
     for($i = count($cc) - 1; $i >= 0; $i--) {
       $link .= $cc[$i];
       if($i > 0) {
