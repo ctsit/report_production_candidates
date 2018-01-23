@@ -1,7 +1,7 @@
 {
    "name": "Report Production Candidates",
    "namespace": "ReportProductionCandidatesModule\\ExternalModule",
-   "description": "This REDCap module creates and displays a list of REDCap projects that should be moved into production.",
+   "description": "This REDCap module creates and displays a list of REDCap projects that should be moved into production. This module is integrated with Stanford University's <a href='https://github.com/aandresalvarez/go_to_prod'>Go to Prod plugin</a> and provides an interface for REDCap Admins to contact owners of projects for follow up. See the complete <b><a href='https://github.com/ctsit/report_production_candidates' target='_blank'>documentation</a></b> at <a href='https://github.com/ctsit/report_production_candidates' target='_blank'>https://github.com/ctsit/report_production_candidates</a>.",
    "authors": [
      {
           "name": "Dileep Rajput",
