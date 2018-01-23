@@ -76,7 +76,7 @@ class ExternalModule extends AbstractExternalModule {
     $subject = $this->getSystemSetting("rpc_subject");
     $body = $this->getSystemSetting("rpc_body");
 
-    $link = "mailto:" . $email . "?cc=";
+    $link = $email . "?cc=";
 
     //add emails in cc list
     for($i = count($cc) - 1; $i >= 0; $i--) {
