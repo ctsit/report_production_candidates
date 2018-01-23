@@ -70,7 +70,7 @@ class ExternalModule extends AbstractExternalModule {
   }
 
   /*takes in an email and returns a properly formated email link while also
-    adhearing to the template provided by the user.*/
+    adhering to the template provided by the user.*/
   function get_mailer_link($email) {
     $cc = $this->getSystemSetting("rpc_cc");
     $subject = $this->getSystemSetting("rpc_subject");
