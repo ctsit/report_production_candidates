@@ -48,7 +48,7 @@ Here is a sample message from a generic REDCap support team informing the recipi
 >
 > We are contacting you directly to engage you in a discussion about whether this project should move to production and what steps would be needed to make that happen. We would have made the move to production ourselves, but our reports suggest the project may need some changes before it can safely be moved to production.
 >
-> If you are interested in the data protections production status affords your data, please access [go_prod_url] to review the pre-move checklist.
+> If you are interested in the data protections production status affords your data, please use review tool at [go_prod_url] to check your project and address any issues found. Once all of the issues are addressed, click the "Request to move project to production" link at [project_home_url] and take the "Move the production survey checklist" that appears in the pop up box.
 >
 > Regards,
 > Your REDCap Support Team
