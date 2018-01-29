@@ -98,7 +98,7 @@ foreach ($result as $project) {
   if($creator_username) {
       $email = get_user_email($creator_username);
       $link = $module->get_mailer_link($email, $parameter_substitution_data);
-      echo "<td><a href='mailto:" . $link . "'>" . $creator_username . "</a></td>";
+      echo "<td><a href='" . $link . "'>" . $creator_username . "</a></td>";
   } else {
       echo "<td>Could not find creator's name</td>";
   }
@@ -111,7 +111,7 @@ foreach ($result as $project) {
   $last_user = get_last_user($project["project_id"]);
   $email = get_user_email($last_user);
   $link = $module->get_mailer_link($email, $parameter_substitution_data);
-  echo "<td><a href='mailto:" . $link . "'>" . $last_user . "</a></td>";
+  echo "<td><a href='" . $link . "'>" . $last_user . "</a></td>";
   echo "</tr>";
 
   //update row to maintain consistant css
