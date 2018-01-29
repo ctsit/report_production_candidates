@@ -70,13 +70,15 @@ class ExternalModule extends AbstractExternalModule {
   }
 
   /*takes in an email and returns a properly formated email link while also
-    adhering to the template provided by the user.*/
-  function get_mailer_link($email) {
+    adhearing to the template provided by the user.*/
+  function get_mailer_link($email, $data) {
     $cc = $this->getSystemSetting("rpc_cc");
     $subject = $this->getSystemSetting("rpc_subject");
     $body = $this->getSystemSetting("rpc_body");
 
-    $link = $email . "?cc=";
+    $body = $this->pipe_to_template($body, $data);
+
+    $link = "mailto:" . $email . "?cc=";
 
     //add emails in cc list
     for($i = count($cc) - 1; $i >= 0; $i--) {
