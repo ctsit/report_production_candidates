@@ -16,7 +16,7 @@ $sql = "SELECT
           redcap_projects.app_title AS project_title,
           redcap_record_counts.record_count,
           redcap_project_stats.saved_attribute_count,
-          DATEDIFF(NOW(), redcap_projects.creation_time) AS age,
+          DATEDIFF(NOW(), redcap_projects.creation_time) AS project_age,
           redcap_projects.project_pi_firstname,
           redcap_projects.project_pi_lastname,
           redcap_projects.project_pi_email,
@@ -85,7 +85,7 @@ foreach ($result as $project) {
   echo "<td><a href='" . $project["project_home_url"] . "'>" . $project["project_title"] . "</a></td>";
   echo "<td>" . $project["record_count"] . "</td>";
   echo "<td>" . $project["saved_attribute_count"] . "</td>";
-  echo "<td>" . $project["age"] . "</td>";
+  echo "<td>" . $project["project_age"] . "</td>";
 
   //Not all projects have pi's so format output accordingly
   if($project['project_pi_firstname']) {
