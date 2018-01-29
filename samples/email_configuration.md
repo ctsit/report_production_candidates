@@ -18,26 +18,6 @@ Parameters must be enclosed in square brackets to be recognized by the template 
 
 Here is a sample message from a generic REDCap support team informing the recipient about the need to move a particular project to production.
 
-# Sample Email Configuration
-
-The emails drafted by the `report_production_candidates` plugin are built upon a template stored in the system-level module configuration. That configuration is blank by default.  It needs to be configured to provide a message subject and body.
-
-
-## Parameters
-
-Both the subject and the body of the email support a simple parameter substitution not unlike REDCap data piping. These parameters are supported:
-
-    * project_title
-    * project_home_url
-    * go_prod_url
-
-Parameters must be enclosed in square brackets to be recognized by the template engine.  e.g. [project_title] will be replaced by the REDCap project's title.
-
-
-## Sample message
-
-Here is a sample message from a generic REDCap support team informing the recipient about the need to move a particular project to production.
-
 > CC: redcap-support@example.org
 >
 > Subject: Moving your REDCap project to production
@@ -52,4 +32,3 @@ Here is a sample message from a generic REDCap support team informing the recipi
 >
 > Regards,
 > Your REDCap Support Team
-
