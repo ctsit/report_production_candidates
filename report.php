@@ -70,6 +70,11 @@ echo "<table class='dataTable cell-border'>
 $odd_row = true;
 foreach ($result as $project) {
 
+  $parameter_substitution_data = [];
+  $parameter_substitution_data["project_title"] = $project["project_name"];
+  $parameter_substitution_data["go_prod_url"] = APP_PATH_WEBROOT_FULL . "plugins/go_prod/?pid=" . $project["project_id"];
+  $parameter_substitution_data["project_home_url"] = APP_PATH_WEBROOT_FULL . "redcap_v" . REDCAP_VERSION . "/ProjectSetup/index.php?pid=" . $project["project_id"];
+
   $proj_link = "../ProjectSetup/index.php?pid=" . $project["project_id"];
 
   echo $odd_row ? "<tr class='odd'>" : "<tr class='even'>";
