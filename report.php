@@ -13,7 +13,7 @@ if (!$module->check_stats_table_exists()) {
 //get data from db
 $sql = "SELECT
           redcap_projects.project_id,
-          redcap_projects.app_title AS project_name,
+          redcap_projects.app_title AS project_title,
           redcap_record_counts.record_count,
           redcap_project_stats.saved_attribute_count,
           DATEDIFF(NOW(), redcap_projects.creation_time) AS age,
@@ -71,7 +71,6 @@ $odd_row = true;
 foreach ($result as $project) {
 
   //process data into useful information
-  $project["project_title"] = $project["project_name"];
   $project["go_prod_url"] = APP_PATH_WEBROOT_FULL . "plugins/go_prod/?pid=" . $project["project_id"];
   $project["project_home_url"] = APP_PATH_WEBROOT_FULL . "redcap_v" . REDCAP_VERSION . "/ProjectSetup/index.php?pid=" . $project["project_id"];
   $project["creator_username"] = uid_to_username($project["creator_id"]);
@@ -83,7 +82,7 @@ foreach ($result as $project) {
   echo $odd_row ? "<tr class='odd'>" : "<tr class='even'>";
   echo "<td><a href='" . $project["go_prod_url"] . "' class='btn btn-default'>Go to Prod</td>";
   echo "<td><a href='" . $project["project_home_url"] . "'>" . $project["project_id"] . "</a></td>";
-  echo "<td><a href='" . $project["project_home_url"] . "'>" . $project["project_name"] . "</a></td>";
+  echo "<td><a href='" . $project["project_home_url"] . "'>" . $project["project_title"] . "</a></td>";
   echo "<td>" . $project["record_count"] . "</td>";
   echo "<td>" . $project["saved_attribute_count"] . "</td>";
   echo "<td>" . $project["age"] . "</td>";
