@@ -88,11 +88,11 @@ foreach ($result as $project) {
   echo "<td>" . $project["age"] . "</td>";
 
   //Not all projects have pi's so format output accordingly
-  if(empty($project['project_pi_firstname'])) {
-    echo "<td> No Data </td>";
-  } else {
+  if($project['project_pi_firstname']) {
     $link = $module->get_mailer_link($project['project_pi_email'], $project);
     echo "<td><a href='" . $link . "'>" . $project["project_pi_firstname"] . " " . $project["project_pi_lastname"] . "</td>";
+  } else {
+    echo "<td> No Data </td>";
   }
 
   //sometimes creators can not be found on the system so we format output accordingly
