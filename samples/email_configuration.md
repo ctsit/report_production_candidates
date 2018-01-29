@@ -10,8 +10,21 @@ Both the subject and the body of the email support a simple parameter substituti
     * project_title
     * project_home_url
     * go_prod_url
+    * creator_username
+    * creator_email
+    * last_user
+    * last_user_email
+    * purpose
+    * project_id
+    * record_count
+    * saved_attribute_count
+    * project_age
+    * project_pi_firstname
+    * project_pi_lastname
+    * project_pi_email
+    * most_recent_activity
 
-Parameters must be enclosed in square brackets to be recognized by the template engine.  e.g. [project_title] will be replaced by the REDCap project's title.
+Parameters must be enclosed in square brackets to be recognized by the template engine.  e.g. [project_title] will be replaced by the REDCap project's title. Keep in mind that some parameters can be substituted by an empty value. For example, if you use 'project_pi_firstname' as a parameter with a project that does not have a PI then that parameter will be substituted by an empty string.
 
 
 ## Sample message
