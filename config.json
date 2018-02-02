@@ -58,5 +58,9 @@
 			    "cron_frequency": "86400",
 			    "cron_max_run_time": "1200"
 		    }
-	  ]
+    ],
+    "compatibility": {
+        "redcap-version-min": "8.0.3",
+        "redcap-version-max": ""
+   }
 }
