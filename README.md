@@ -7,7 +7,7 @@ This REDCap module creates and displays a list of REDCap projects that should be
 - [go_to_prod plugin](https://github.com/aandresalvarez/go_to_prod) installed on your REDCap instance.
 
 ## System-level Installation
-1. Clone this repo into to `<redcap-root>/modules/report_production_candidates_v<module_version_number>`.
+1. Clone this repo into `<redcap-root>/modules/report_production_candidates_v<module_version_number>`.
 2. Go to **Control Center > Manage External Modules** and enable _Report Production Candidates_.
 
 ## Configuration
