@@ -82,7 +82,7 @@ foreach ($result as $project) {
   echo $odd_row ? "<tr class='odd'>" : "<tr class='even'>";
   echo "<td><a href='" . $project["go_prod_url"] . "' class='btn btn-default'>Go to Prod</td>";
   echo "<td><a href='" . $project["project_home_url"] . "'>" . $project["project_id"] . "</a></td>";
-  echo "<td><a href='" . $project["project_home_url"] . "'>" . $project["project_title"] . "</a></td>";
+  echo "<td style='min-width: 38ch;'><a href='" . $project["project_home_url"] . "'>" . $project["project_title"] . "</a></td>";
   echo "<td>" . $project["record_count"] . "</td>";
   echo "<td>" . $project["saved_attribute_count"] . "</td>";
   echo "<td>" . $project["project_age"] . "</td>";
