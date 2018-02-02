@@ -73,9 +73,11 @@ class ExternalModule extends AbstractExternalModule {
     adhearing to the template provided by the user.*/
   function get_mailer_link($email, $data) {
     $cc = $this->getSystemSetting("rpc_cc");
-    $subject = $this->getSystemSetting("rpc_subject");
-    $body = $this->getSystemSetting("rpc_body");
 
+    $subject = $this->getSystemSetting("rpc_subject");
+    $subject = $this->pipe_to_template($subject, $data);
+
+    $body = $this->getSystemSetting("rpc_body");
     $body = $this->pipe_to_template($body, $data);
 
     $link = "mailto:" . $email . "?cc=";
