@@ -33,11 +33,11 @@ Here is a sample message from a generic REDCap support team informing the recipi
 
 > CC: redcap-support@example.org
 >
-> Subject: Moving your REDCap project to production
+> Subject: Moving your REDCap project to production: [project_title]
 >
 > Body:
 >
-> The REDCap project "[project name]", accessible at [project_home_url], may need some attention to assure your data is properly protected.  The amount of data stored within it suggests your data might be better protected if the project were moved into REDCap's production status. Production status turns on a data audit trail so that one can always answer the question "Who changed what when?". Production mode also allows data dictionary checks to be reviewed before implementation. REDCap's automated review can generate warnings whenever a data dictionary change would put data at risk and give you the option to reconsider those changes.
+> The REDCap project "[project_title]", accessible at [project_home_url], may need some attention to assure your data is properly protected.  The amount of data stored within it suggests your data might be better protected if the project were moved into REDCap's production status. Production status turns on a data audit trail so that one can always answer the question "Who changed what when?". Production mode also allows data dictionary checks to be reviewed before implementation. REDCap's automated review can generate warnings whenever a data dictionary change would put data at risk and give you the option to reconsider those changes.
 >
 > We are contacting you directly to engage you in a discussion about whether this project should move to production and what steps would be needed to make that happen. We would have made the move to production ourselves, but our reports suggest the project may need some changes before it can safely be moved to production.
 >
