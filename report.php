@@ -105,7 +105,7 @@ if($project["creator_username"]) {
 
   //print out project purpose and the when the most recent activity was
   echo "<td>" . $project["purpose"] . "</td>";
-  echo "<td>" . $project["most_recent_activity"] . "</td>";
+  echo "<td style='min-width: 10ch;'>" . $project["most_recent_activity"] . "</td>";
 
   //print out last project user
   $link = $module->get_mailer_link($project["last_user_email"], $project);
