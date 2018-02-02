@@ -10,28 +10,21 @@ Both the subject and the body of the email support a simple parameter substituti
     * project_title
     * project_home_url
     * go_prod_url
+    * creator_username
+    * creator_email
+    * last_user
+    * last_user_email
+    * purpose
+    * project_id
+    * record_count
+    * saved_attribute_count
+    * project_age
+    * project_pi_firstname
+    * project_pi_lastname
+    * project_pi_email
+    * most_recent_activity
 
-Parameters must be enclosed in square brackets to be recognized by the template engine.  e.g. [project_title] will be replaced by the REDCap project's title.
-
-
-## Sample message
-
-Here is a sample message from a generic REDCap support team informing the recipient about the need to move a particular project to production.
-
-# Sample Email Configuration
-
-The emails drafted by the `report_production_candidates` plugin are built upon a template stored in the system-level module configuration. That configuration is blank by default.  It needs to be configured to provide a message subject and body.
-
-
-## Parameters
-
-Both the subject and the body of the email support a simple parameter substitution not unlike REDCap data piping. These parameters are supported:
-
-    * project_title
-    * project_home_url
-    * go_prod_url
-
-Parameters must be enclosed in square brackets to be recognized by the template engine.  e.g. [project_title] will be replaced by the REDCap project's title.
+Parameters must be enclosed in square brackets to be recognized by the template engine.  e.g. [project_title] will be replaced by the REDCap project's title. Keep in mind that some parameters can be substituted by an empty value. For example, if you use 'project_pi_firstname' as a parameter with a project that does not have a PI then that parameter will be substituted by an empty string.
 
 
 ## Sample message
@@ -52,4 +45,3 @@ Here is a sample message from a generic REDCap support team informing the recipi
 >
 > Regards,
 > Your REDCap Support Team
-

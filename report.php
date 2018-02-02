@@ -13,10 +13,10 @@ if (!$module->check_stats_table_exists()) {
 //get data from db
 $sql = "SELECT
           redcap_projects.project_id,
-          redcap_projects.app_title AS project_name,
+          redcap_projects.app_title AS project_title,
           redcap_record_counts.record_count,
           redcap_project_stats.saved_attribute_count,
-          DATEDIFF(NOW(), redcap_projects.creation_time) AS age,
+          DATEDIFF(NOW(), redcap_projects.creation_time) AS project_age,
           redcap_projects.project_pi_firstname,
           redcap_projects.project_pi_lastname,
           redcap_projects.project_pi_email,
@@ -70,43 +70,46 @@ echo "<table class='dataTable cell-border'>
 $odd_row = true;
 foreach ($result as $project) {
 
-  $proj_link = "../ProjectSetup/index.php?pid=" . $project["project_id"];
+  //process data into useful information
+  $project["go_prod_url"] = APP_PATH_WEBROOT_FULL . "plugins/go_prod/?pid=" . $project["project_id"];
+  $project["project_home_url"] = APP_PATH_WEBROOT_FULL . "redcap_v" . REDCAP_VERSION . "/ProjectSetup/index.php?pid=" . $project["project_id"];
+  $project["creator_username"] = uid_to_username($project["creator_id"]);
+  $project["creator_email"] = get_user_email($project["creator_username"]);
+  $project["last_user"] = get_last_user($project["project_id"]);
+  $project["last_user_email"] = get_user_email($project["last_user"]);
+  $project["purpose"] = purpose_num_to_purpose_name($project["purpose_num"]);
 
   echo $odd_row ? "<tr class='odd'>" : "<tr class='even'>";
-  echo "<td><a href='../../plugins/go_prod/?pid=" . $project["project_id"] . "' class='btn btn-default'>Go to Prod</td>";
-  echo "<td><a href='" . $proj_link . "'>" . $project["project_id"] . "</a></td>";
-  echo "<td><a href='" . $proj_link . "'>" . $project["project_name"] . "</a></td>";
+  echo "<td><a href='" . $project["go_prod_url"] . "' class='btn btn-default'>Go to Prod</td>";
+  echo "<td><a href='" . $project["project_home_url"] . "'>" . $project["project_id"] . "</a></td>";
+  echo "<td><a href='" . $project["project_home_url"] . "'>" . $project["project_title"] . "</a></td>";
   echo "<td>" . $project["record_count"] . "</td>";
   echo "<td>" . $project["saved_attribute_count"] . "</td>";
-  echo "<td>" . $project["age"] . "</td>";
+  echo "<td>" . $project["project_age"] . "</td>";
 
   //Not all projects have pi's so format output accordingly
-  if(empty($project['project_pi_firstname'])) {
-    echo "<td> No Data </td>";
-  } else {
-    $link = $module->get_mailer_link($project['project_pi_email']);
+  if($project['project_pi_firstname']) {
+    $link = $module->get_mailer_link($project['project_pi_email'], $project);
     echo "<td><a href='" . $link . "'>" . $project["project_pi_firstname"] . " " . $project["project_pi_lastname"] . "</td>";
+  } else {
+    echo "<td> No PI </td>";
   }
 
   //sometimes creators can not be found on the system so we format output accordingly
-  $creator_username = uid_to_username($project["creator_id"]);
-  if($creator_username) {
-      $email = get_user_email($creator_username);
-      $link = $module->get_mailer_link($email);
-      echo "<td><a href='mailto:" . $link . "'>" . $creator_username . "</a></td>";
+if($project["creator_username"]) {
+      $link = $module->get_mailer_link($project["creator_email"], $project);
+      echo "<td><a href='" . $link . "'>" . $project["creator_username"] . "</a></td>";
   } else {
       echo "<td>Could not find creator's name</td>";
   }
 
   //print out project purpose and the when the most recent activity was
-  echo "<td>" . purpose_num_to_purpose_name($project["purpose_num"]) . "</td>";
+  echo "<td>" . $project["purpose"] . "</td>";
   echo "<td>" . $project["most_recent_activity"] . "</td>";
 
   //print out last project user
-  $last_user = get_last_user($project["project_id"]);
-  $email = get_user_email($last_user);
-  $link = $module->get_mailer_link($email);
-  echo "<td><a href='mailto:" . $link . "'>" . $last_user . "</a></td>";
+  $link = $module->get_mailer_link($project["last_user_email"], $project);
+  echo "<td><a href='" . $link . "'>" . $project["last_user"] . "</a></td>";
   echo "</tr>";
 
   //update row to maintain consistant css

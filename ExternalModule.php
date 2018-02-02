@@ -70,13 +70,15 @@ class ExternalModule extends AbstractExternalModule {
   }
 
   /*takes in an email and returns a properly formated email link while also
-    adhering to the template provided by the user.*/
-  function get_mailer_link($email) {
+    adhearing to the template provided by the user.*/
+  function get_mailer_link($email, $data) {
     $cc = $this->getSystemSetting("rpc_cc");
     $subject = $this->getSystemSetting("rpc_subject");
     $body = $this->getSystemSetting("rpc_body");
 
-    $link = $email . "?cc=";
+    $body = $this->pipe_to_template($body, $data);
+
+    $link = "mailto:" . $email . "?cc=";
 
     //add emails in cc list
     for($i = count($cc) - 1; $i >= 0; $i--) {
@@ -91,6 +93,54 @@ class ExternalModule extends AbstractExternalModule {
 
     return $link;
   }
+
+
+/**
+ * Pipes the data in $data into the appropriate spots in $template
+ *
+ * Example: "Hello, [first_name]!" turns into "Hello, Joe Doe!".
+ *
+ * @param string $template
+ *   The template to be piped to.
+ * @param array $data
+ *   A dictionary of source data. The key corresponds to the parameter the
+ *   function looks for in $template. The key's value is the thing that is actually
+ *   put into the template. This function supports nesting values, which are mapped
+ *   on the subject string as nesting square brackets (e.g. [user][first_name]).
+ *
+ * @return string
+ *   The processed string, with the replaced values from source data.
+ */
+protected function pipe_to_template($subject, $data) {
+    preg_match_all('/(\[[^\[]*\])+/', $subject, $matches);
+
+    foreach ($matches[0] as $wildcard) {
+        $parts = substr($wildcard, 1, -1);
+        $parts = explode('][', $parts);
+
+        $value = '';
+        if (count($parts) == 1) {
+            // This wildcard has no children.
+            if (isset($data[$parts[0]])) {
+                $value = $data[$parts[0]];
+            }
+        }
+        else {
+            $child = array_shift($parts);
+            if (isset($data[$child]) && is_array($data[$child])) {
+                // Wildcard with children. Call function recursively.
+                $value = send_rx_piping('[' . implode('][', $parts) . ']', $data[$child]);
+            }
+        }
+
+        // Search and replace.
+        $subject = str_replace($wildcard, $value, $subject);
+    }
+
+    return $subject;
+}
+
+
 }
 
 ?>
