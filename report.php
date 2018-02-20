@@ -45,7 +45,10 @@ if(!$result) {
 }
 
 //convert data from mysqli obj to an associative array
-$result = $result->fetch_all(MYSQLI_ASSOC);
+$data = [];
+while ($row = $result->fetch_assoc()) {
+	$data[] = $row;
+}
 
 //start printing data table
 echo "<table class='dataTable cell-border'>
@@ -68,7 +71,7 @@ echo "<table class='dataTable cell-border'>
 
 //print table body
 $odd_row = true;
-foreach ($result as $project) {
+foreach ($data as $project) {
 
   //process data into useful information
   $project["go_prod_url"] = APP_PATH_WEBROOT_FULL . "plugins/go_prod/?pid=" . $project["project_id"];
