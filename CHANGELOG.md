@@ -2,6 +2,12 @@
 All notable changes to the Report Production Candidates module will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.1] - 2018-02-02
+### Added
+- Add Marly Cormar to the list of authors (Dileep)
+
+### Changed
+- Replace call to mysqli_result::fetch_all() with a loop to comply with php5 (Dileep)
 
 ## [1.0.0] - 2018-02-02
 ### Summary
