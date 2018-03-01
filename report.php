@@ -33,7 +33,9 @@ $sql = "SELECT
           AND redcap_projects.purpose != 0
           AND (redcap_record_counts.record_count > 100
           OR redcap_project_stats.saved_attribute_count > 500)
-          AND DATEDIFF(NOW(), redcap_projects.creation_time) > 30";
+          AND DATEDIFF(NOW(), redcap_projects.creation_time) > 30
+          order by redcap_project_stats.saved_attribute_count desc
+          limit 35";
 
 $result = ExternalModules::query($sql);
 
