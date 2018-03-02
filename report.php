@@ -35,7 +35,7 @@ $sql = "SELECT
           OR redcap_project_stats.saved_attribute_count > 500)
           AND DATEDIFF(NOW(), redcap_projects.creation_time) > 30
           order by redcap_project_stats.saved_attribute_count desc
-          limit 35";
+          limit 150";
 
 $result = ExternalModules::query($sql);
 
