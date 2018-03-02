@@ -97,7 +97,7 @@ foreach ($data as $project) {
     $link = $module->get_mailer_link($project['project_pi_email'], $project);
     echo "<td><a href='" . $link . "'>" . $project["project_pi_firstname"] . " " . $project["project_pi_lastname"] . "</td>";
   } else {
-    echo "<td> No PI </td>";
+    echo "<td></td>";
   }
 
   //sometimes creators can not be found on the system so we format output accordingly
