@@ -105,7 +105,7 @@ if($project["creator_username"]) {
       $link = $module->get_mailer_link($project["creator_email"], $project);
       echo "<td><a href='" . $link . "'>" . $project["creator_username"] . "</a></td>";
   } else {
-      echo "<td>Could not find creator's name</td>";
+      echo "<td></td>";
   }
 
   //print out project purpose and the when the most recent activity was
