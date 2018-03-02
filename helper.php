@@ -21,14 +21,12 @@ function uid_to_username($uid) {
 }
 
 function get_last_user($pid) {
-  $result = ExternalModules::query("SELECT user FROM redcap_log_event as el inner join
-                                    redcap_user_rights as ur on el.user = ur.username and el.project_id = ur.project_id and ur.project_id=$pid
-                                    order by ts desc limit 1;");
+  $result = ExternalModules::query("SELECT last_user FROM " . TABLE_NAME . " where project_id=$pid");
   if (!$result) {
     return false;
   }
 
-  return $result->fetch_assoc()["user"];
+  return $result->fetch_assoc()["last_user"];
 }
 
  function get_user_email($username) {
