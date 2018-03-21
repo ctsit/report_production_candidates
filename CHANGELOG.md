@@ -2,6 +2,15 @@
 All notable changes to the Report Production Candidates module will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.2] - 2018-03-21
+### Added
+- Add caching of last_user information for performance reasons (Philip Chase)
+- Add documentation (Philip Chase)
+
+### Changed
+- Streamline display (Philip Chase)
+
+
 ## [1.0.1] - 2018-02-02
 ### Added
 - Add Marly Cormar to the list of authors (Dileep)
