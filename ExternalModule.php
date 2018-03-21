@@ -42,31 +42,73 @@ class ExternalModule extends AbstractExternalModule {
     return false;
   }
 
+
   //creates project_stats table
   private function create_stats_table() {
     $result = ExternalModules::query("CREATE TABLE " . TABLE_NAME . " (
                                         project_id int(10) PRIMARY KEY,
-                                        saved_attribute_count int(10) UNSIGNED)");
+                                        saved_attribute_count int(10) UNSIGNED,
+                                        last_user varchar(255))");
 
     if (!$result) {
       throw new Exception("cannot create " . TABLE_NAME . " table.");
     }
   }
 
-  //updates project stats table with info from redcap_data
-  private function update_stats_table() {
-    $result = ExternalModules::query("REPLACE INTO " . TABLE_NAME . " (
-                                        project_id,
-                                        saved_attribute_count)
-                                      SELECT
-                                        project_id,
-                                        COUNT(*) AS saved_attribute_count
-                                      FROM redcap_data
-                                      GROUP BY project_id;");
+
+  // make sure every project has a row in the stats table
+  private function add_rows_to_stats_table() {
+    $sql = "INSERT INTO " . TABLE_NAME . " (project_id) select project_id from redcap_projects";
+    $result = ExternalModules::query($sql);
+  }
+
+
+  //update project stats table with info from redcap_data
+  private function update_saved_attribute_count_in_stats_table() {
+    $result = ExternalModules::query("update " . TABLE_NAME . " as ps
+      set saved_attribute_count =
+      (SELECT COUNT(*) FROM redcap_data as d where ps.project_id = d.project_id)");
 
     if (!$result) {
       throw new Exception("cannot update " . TABLE_NAME . " table.");
     }
+  }
+
+  // update project stats table with info from redcap_log_event
+  private function update_last_user_in_stats_table() {
+    // Get list of project_ids so we can iterate on them
+    $sql = "select project_id from redcap_projects";
+    $result = ExternalModules::query($sql);
+
+    //check if query was successful
+    if(!$result) {
+      exit(0);
+    }
+
+    //convert data from mysqli obj to an associative array
+    $data = [];
+    while ($row = $result->fetch_assoc()) {
+      $data[] = $row;
+    }
+
+    foreach ($data as $project) {
+      $pid = $project["project_id"];
+      $result = ExternalModules::query("update " . TABLE_NAME . "
+        set last_user = (SELECT user FROM redcap_log_event as el inner join
+        redcap_user_rights as ur on el.user = ur.username and el.project_id = ur.project_id and ur.project_id=$pid
+        order by ts desc limit 1) where project_id = $pid;");
+
+      if (!$result) {
+        throw new Exception("cannot update " . TABLE_NAME . " table.");
+      }
+    }
+
+  }
+
+  private function update_stats_table() {
+    self::add_rows_to_stats_table();
+    self::update_saved_attribute_count_in_stats_table();
+    self::update_last_user_in_stats_table();
   }
 
   /*takes in an email and returns a properly formated email link while also
