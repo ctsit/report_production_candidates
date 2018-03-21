@@ -33,7 +33,8 @@ $sql = "SELECT
           AND redcap_projects.purpose != 0
           AND (redcap_record_counts.record_count > 100
           OR redcap_project_stats.saved_attribute_count > 500)
-          AND DATEDIFF(NOW(), redcap_projects.creation_time) > 30";
+          AND DATEDIFF(NOW(), redcap_projects.creation_time) > 30
+          order by redcap_project_stats.saved_attribute_count desc";
 
 $result = ExternalModules::query($sql);
 
@@ -95,7 +96,7 @@ foreach ($data as $project) {
     $link = $module->get_mailer_link($project['project_pi_email'], $project);
     echo "<td><a href='" . $link . "'>" . $project["project_pi_firstname"] . " " . $project["project_pi_lastname"] . "</td>";
   } else {
-    echo "<td> No PI </td>";
+    echo "<td></td>";
   }
 
   //sometimes creators can not be found on the system so we format output accordingly
@@ -103,7 +104,7 @@ if($project["creator_username"]) {
       $link = $module->get_mailer_link($project["creator_email"], $project);
       echo "<td><a href='" . $link . "'>" . $project["creator_username"] . "</a></td>";
   } else {
-      echo "<td>Could not find creator's name</td>";
+      echo "<td></td>";
   }
 
   //print out project purpose and the when the most recent activity was

@@ -21,12 +21,12 @@ function uid_to_username($uid) {
 }
 
 function get_last_user($pid) {
-  $result = ExternalModules::query("SELECT user FROM redcap_log_event WHERE ts IN (SELECT MAX(ts) FROM redcap_log_event WHERE project_id='$pid' AND user != '[survey respondent]')");
+  $result = ExternalModules::query("SELECT last_user FROM " . TABLE_NAME . " where project_id=$pid");
   if (!$result) {
     return false;
   }
 
-  return $result->fetch_assoc()["user"];
+  return $result->fetch_assoc()["last_user"];
 }
 
  function get_user_email($username) {
