@@ -48,7 +48,7 @@ class ExternalModule extends AbstractExternalModule {
     $result = ExternalModules::query("CREATE TABLE " . TABLE_NAME . " (
                                         project_id int(10) PRIMARY KEY,
                                         saved_attribute_count int(10) UNSIGNED,
-                                        last_user varchar(255))");
+                                        last_user varchar(255)) COLLATE utf8_unicode_ci");
 
     if (!$result) {
       throw new Exception("cannot create " . TABLE_NAME . " table.");
