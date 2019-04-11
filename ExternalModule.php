@@ -58,7 +58,8 @@ class ExternalModule extends AbstractExternalModule {
 
   // make sure every project has a row in the stats table
   private function add_rows_to_stats_table() {
-    $sql = "INSERT INTO " . TABLE_NAME . " (project_id) select project_id from redcap_projects";
+    // insert the project_ids from the redcap_projects table into the TABLE_NAME only if they do not already exist in TABLE_NAME
+    $sql = "INSERT INTO " . TABLE_NAME . " (project_id) SELECT project_id FROM redcap_projects ON DUPLICATE KEY UPDATE redcap_project_stats.project_id = redcap_projects.project_id";
     $result = ExternalModules::query($sql);
   }
 
