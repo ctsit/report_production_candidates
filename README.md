@@ -3,7 +3,7 @@
 This REDCap module creates and displays a list of REDCap projects that should probably be moved into production. This module is integrated with Stanford University's [Go to Prod plugin](https://github.com/aandresalvarez/go_to_prod) and provides an interface for REDCap Admins to contact owners of projects for follow up.
 
 ## Prerequisites
-- REDCap >= 8.0.3
+- REDCap >= 8.0.3 (for versions < 8.0.3, [REDCap Modules](https://github.com/vanderbilt/redcap-external-modules) is required).
 - [go_to_prod plugin](https://github.com/aandresalvarez/go_to_prod) installed on your REDCap instance.
 
 ## System-level Installation
