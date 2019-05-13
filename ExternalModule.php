@@ -48,7 +48,7 @@ class ExternalModule extends AbstractExternalModule {
     $result = ExternalModules::query("CREATE TABLE " . TABLE_NAME . " (
                                         project_id int(10) PRIMARY KEY,
                                         saved_attribute_count int(10) UNSIGNED,
-                                        last_user varchar(255)) COLLATE utf8_unicode_ci");
+                                        last_user varchar(255))");
 
     if (!$result) {
       throw new Exception("cannot create " . TABLE_NAME . " table.");
@@ -58,7 +58,8 @@ class ExternalModule extends AbstractExternalModule {
 
   // make sure every project has a row in the stats table
   private function add_rows_to_stats_table() {
-    $sql = "INSERT INTO " . TABLE_NAME . " (project_id) select project_id from redcap_projects";
+     // insert the project_ids from the redcap_projects table into the TABLE_NAME only if they do not already exist in TABLE_NAME
+    $sql = "INSERT INTO " . TABLE_NAME . " (project_id) SELECT project_id FROM redcap_projects ON DUPLICATE KEY UPDATE redcap_project_stats.project_id = redcap_projects.project_id";
     $result = ExternalModules::query($sql);
   }
 
