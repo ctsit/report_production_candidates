@@ -2,6 +2,19 @@
 All notable changes to the Report Production Candidates module will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## [1.0.3] - 2019-06-20
+### Added
+- Add caching of last_user information for performance reasons (Philip Chase)
+- Add documentation (Philip Chase)
+- Include mmax redcap version. (Marly Cormar)
+
+## Changed
+- Modify query on add_rows_to_stats_table function to address key duplications. (Marly Cormar)
+- State on the documentation that redcap-external-modules is needed for RC versions < 8.0.3. (Marly Cormar)
+- Indenting config.json. (Tiago Bember Simeao)
+- Set the collation of the redcap_project_ownership table to match REDCap's default of utf8_unicode_ci (Tiago Bember Simeao)
+
 ## [1.0.2] - 2018-03-21
 ### Added
 - Add caching of last_user information for performance reasons (Philip Chase)
