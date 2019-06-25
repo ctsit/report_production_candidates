@@ -27,6 +27,11 @@
             "name": "Marly Cormar",
             "email": "marlycormar@ufl.edu",
             "institution": "University of Florida - CTSI"
+        },
+        {
+            "name": "Kyle Chesney",
+            "email": "kyle.chesney@ufl.edu",
+            "institution": "University of Florida - CTSI"
         }
     ],
     "links" : {
@@ -39,6 +44,22 @@
         ]
     },
     "system-settings": [
+        {
+            "key": "goprod_version",
+            "name": "Go Prod Version",
+            "required": true,
+            "type": "radio",
+            "choices": [
+                {
+                    "value": "go_prod",
+                    "name": "go_prod"
+                },
+                {
+                    "value": "goprod_v2.0",
+                    "name": "goprod_v2.0"
+                }
+            ]
+        },
         {
             "key": "rpc_cc",
             "name": "CC address",
