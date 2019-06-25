@@ -75,7 +75,7 @@ $odd_row = true;
 foreach ($data as $project) {
 
   //process data into useful information
-  $project["go_prod_url"] = APP_PATH_WEBROOT_FULL . "plugins/" . $module->getSystemSetting('goprod_version') . "/?pid=" . $project["project_id"];
+  $project["go_prod_url"] = APP_PATH_WEBROOT_FULL . "redcap_v" . REDCAP_VERSION . "/ExternalModules/?prefix=goprod&page=index&pid=" . $project["project_id"];
   $project["project_home_url"] = APP_PATH_WEBROOT_FULL . "redcap_v" . REDCAP_VERSION . "/ProjectSetup/index.php?pid=" . $project["project_id"];
   $project["creator_username"] = uid_to_username($project["creator_id"]);
   $project["creator_email"] = get_user_email($project["creator_username"]);
