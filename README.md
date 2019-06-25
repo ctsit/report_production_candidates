@@ -4,13 +4,16 @@ This REDCap module creates and displays a list of REDCap projects that should pr
 
 ## Prerequisites
 - REDCap >= 8.0.3 (for versions < 8.0.3, [REDCap Modules](https://github.com/vanderbilt/redcap-external-modules) is required).
-- [go_to_prod plugin](https://github.com/aandresalvarez/go_to_prod) installed on your REDCap instance.
+- A go\_to\_prod plugin installed on your REDCap instance:
+  - The original [go\_to\_prod plugin](https://github.com/aandresalvarez/go_to_prod)
+  - [goprod\_v2.0](https://github.com/aandresalvarez/goprod_v2.0) (not currently functional)
 
 ## System-level Installation
 1. Clone this repo into `<redcap-root>/modules/report_production_candidates_v<module_version_number>`.
 2. Go to **Control Center > Manage External Modules** and enable _Report Production Candidates_.
 
 ## Configuration
+- Users must choose which version of the plugin they wish to use.
 - Users can optionally preload an email template that will be used when they click a username in the report.  See [Sample Email Configuration](samples/email_configuration.md) for an example.
 
 ## Using this module
