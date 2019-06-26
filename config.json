@@ -4,11 +4,6 @@
    "description": "Show a list of REDCap projects that probably should be moved into production. Allow admins to contact owners of projects for follow up. Optional support for a fork of Stanford University's <a href='https://github.com/ctsit/goprod'>Go to Prod module</a>. See the complete <b><a href='https://github.com/ctsit/report_production_candidates' target='_blank'>documentation</a></b> at <a href='https://github.com/ctsit/report_production_candidates' target='_blank'>https://github.com/ctsit/report_production_candidates</a>.",
    "authors": [
         {
-            "name": "Dileep Rajput",
-            "email": "rajputd@ufl.edu",
-            "institution": "University of Florida - CTSI"
-        },
-        {
             "name": "Philip B. Chase",
             "email": "pbc@ufl.edu",
             "institution": "University of Florida - CTSI"
@@ -16,11 +11,6 @@
         {
             "name": "Tayrn Stoffs",
             "email": "tls@ufl.edu",
-            "institution": "University of Florida - CTSI"
-        },
-        {
-            "name": "Tiago Bember",
-            "email": "tbembersimeao@ufl.edu",
             "institution": "University of Florida - CTSI"
         },
         {
