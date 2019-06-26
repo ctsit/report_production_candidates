@@ -1,10 +1,10 @@
 # Report Production Candidates
 
-This REDCap module creates and displays a list of REDCap projects that should probably be moved into production. This module is integrated with Stanford University's [Go to Prod plugin](https://github.com/aandresalvarez/go_to_prod) and provides an interface for REDCap Admins to contact owners of projects for follow up.
+This REDCap module creates and displays a list of REDCap projects that should probably be moved into production. This module is integrated with Stanford University's [goprod module](https://github.com/ctsit/goprod) and provides an interface for REDCap Admins to contact owners of projects for follow up.
 
 ## Prerequisites
 - REDCap >= 8.0.3 (for versions < 8.0.3, [REDCap Modules](https://github.com/vanderbilt/redcap-external-modules) is required).
-- [go_to_prod plugin](https://github.com/aandresalvarez/go_to_prod) installed on your REDCap instance.
+- The [goprod module](https://github.com/ctsit/goprod) installed on your REDCap instance _and_ enabled on all projects.
 
 ## System-level Installation
 1. Clone this repo into `<redcap-root>/modules/report_production_candidates_v<module_version_number>`.
