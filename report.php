@@ -30,6 +30,7 @@ $sql = "SELECT
             ON redcap_project_stats.project_id = redcap_record_counts.project_id
         WHERE
           redcap_projects.status = 0
+          AND redcap_projects.date_deleted IS NULL
           AND redcap_projects.purpose != 0
           AND (redcap_record_counts.record_count > 100
           OR redcap_project_stats.saved_attribute_count > 500)
