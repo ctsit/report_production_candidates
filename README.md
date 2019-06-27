@@ -1,14 +1,18 @@
 # Report Production Candidates
 
-This REDCap module creates and displays a list of REDCap projects that should probably be moved into production. This module is integrated with Stanford University's [goprod module](https://github.com/ctsit/goprod) and provides an interface for REDCap Admins to contact owners of projects for follow up.
+This REDCap module shows a list of REDCap projects that probably should be moved into production. It allows admins to contact owners of projects for follow up and provides optional support for the University of Florida's fork of Stanford University's <a href='https://github.com/ctsit/goprod'>Go to Prod module</a>.
 
 ## Prerequisites
-- REDCap >= 8.0.3 (for versions < 8.0.3, [REDCap Modules](https://github.com/vanderbilt/redcap-external-modules) is required).
-- The [goprod module](https://github.com/ctsit/goprod) installed on your REDCap instance _and_ enabled on all projects.
+- REDCap >= 8.0.3
 
-## System-level Installation
-1. Clone this repo into `<redcap-root>/modules/report_production_candidates_v<module_version_number>`.
-2. Go to **Control Center > Manage External Modules** and enable _Report Production Candidates_.
+## Easy Installation
+- Obtain this module from the Consortium [REDCap Repo](https://redcap.vanderbilt.edu/consortium/modules/index.php) from the control center.
+
+## Manual installation
+- Clone this repo into `<redcap-root>/modules/report_production_candidates_v<module_version_number>`.
+
+## Optional installation
+- Clone the repo https://github.com/ctsit/goprod into `<redcap-root>/modules/report_production_candidates_v<module_version_number>`. RPC will automatically detect its presence and provide links from candidate projects list into the GoProd project review workflow.
 
 ## Configuration
 - Users can optionally preload an email template that will be used when they click a username in the report.  See [Sample Email Configuration](samples/email_configuration.md) for an example.
