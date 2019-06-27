@@ -54,6 +54,21 @@
             "required": false,
             "type": "textarea",
             "repeatable": false
+        },
+        {
+            "key": "use_goprod",
+            "name": "Use goprod module?",
+            "type": "radio",
+            "choices": [
+                {
+                    "name": "No",
+                    "value": ""
+                },
+                {
+                    "name": "Yes",
+                    "value": "1"
+                }
+            ]
         }
     ],
     "crons": [
