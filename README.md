@@ -6,7 +6,7 @@ This REDCap module shows a list of REDCap projects that probably should be moved
 - REDCap >= 8.0.3
 
 ## Easy Installation
-- Obtain this module from the Consortium [REDCap Repo] (https://redcap.vanderbilt.edu/consortium/modules/index.php) from the control center.
+- Obtain this module from the Consortium [REDCap Repo](https://redcap.vanderbilt.edu/consortium/modules/index.php) from the control center.
 
 ## Manual installation
 - Clone this repo into `<redcap-root>/modules/report_production_candidates_v<module_version_number>`.
