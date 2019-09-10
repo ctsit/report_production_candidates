@@ -16,9 +16,10 @@ This REDCap module shows a list of REDCap projects that probably should be moved
 
 ## Configuration
 - Users can optionally preload an email template that will be used when they click a username in the report.  See [Sample Email Configuration](samples/email_configuration.md) for an example.
+- Users may also toggle whether or not to provide a link to the Go to Prod module page for each project listed in their report.
 
 ## Using this module
-Go to **Control Center > Report Production Candidates** and to view the reports. Admins can use the Go to Prod button to review the project's production readiness and move the project into production. They can also click on REDCap usernames within the report to send those users an email. This email can be pre-filled with a template via the module's configuration page.
+Go to **Control Center > Report Production Candidates** and to view the reports. If use of the Go to Prod module is enabled in the configuration, admins can use the Go to Prod link to review the project's production readiness and move the project into production. They can also click on REDCap usernames within the report to send those users an email. This email can be pre-filled with a template via the module's configuration page.
 
 ## Notes regarding initial load of the report
 
