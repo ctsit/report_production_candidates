@@ -33,7 +33,7 @@ $sql = "SELECT
           AND redcap_projects.date_deleted IS NULL
           AND redcap_projects.purpose != 0
           AND (redcap_record_counts.record_count > 100
-          OR redcap_project_stats.saved_attribute_count > 500)
+            OR redcap_project_stats.saved_attribute_count > 500)
           AND DATEDIFF(NOW(), redcap_projects.creation_time) > 30
           order by redcap_project_stats.saved_attribute_count desc";
 
@@ -73,10 +73,13 @@ echo "<table class='dataTable cell-border'>
 
 //print table body
 $odd_row = true;
+$use_goprod = $module->getSystemSetting('use_goprod');
 foreach ($data as $project) {
 
   //process data into useful information
-  $project["go_prod_url"] = APP_PATH_WEBROOT_FULL . "redcap_v" . REDCAP_VERSION . "/ExternalModules/?prefix=goprod&page=index&pid=" . $project["project_id"];
+  if (isset($use_goprod)) {
+      $project["go_prod_url"] = APP_PATH_WEBROOT_FULL . "redcap_v" . REDCAP_VERSION . "/ExternalModules/?prefix=goprod&page=index&pid=" . $project["project_id"];
+  }
   $project["project_home_url"] = APP_PATH_WEBROOT_FULL . "redcap_v" . REDCAP_VERSION . "/ProjectSetup/index.php?pid=" . $project["project_id"];
   $project["creator_username"] = uid_to_username($project["creator_id"]);
   $project["creator_email"] = get_user_email($project["creator_username"]);
@@ -85,7 +88,13 @@ foreach ($data as $project) {
   $project["purpose"] = purpose_num_to_purpose_name($project["purpose_num"]);
 
   echo $odd_row ? "<tr class='odd'>" : "<tr class='even'>";
-  echo "<td><a href='" . $project["go_prod_url"] . "' class='btn btn-default'>Go to Prod</td>";
+
+  if ($project['go_prod_url']) {
+      echo "<td><a href='" . $project["go_prod_url"] . "' class='btn btn-default'>Go to Prod</td>";
+  } else {
+      echo "<td></td>";
+  }
+
   echo "<td><a href='" . $project["project_home_url"] . "'>" . $project["project_id"] . "</a></td>";
   echo "<td style='min-width: 38ch;'><a href='" . $project["project_home_url"] . "'>" . $project["project_title"] . "</a></td>";
   echo "<td>" . $project["record_count"] . "</td>";
