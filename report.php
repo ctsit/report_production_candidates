@@ -1,12 +1,14 @@
 <?php
-use ExternalModules\ExternalModules;
+use ReportProductionCandidatesModule\ExternalModule\ExternalModule;
 
-require_once APP_PATH_DOCROOT . 'ControlCenter/header.php';
+  require_once APP_PATH_DOCROOT . 'ControlCenter/header.php';
 require_once 'helper.php';
 
 //Run the cron if it has not ran for the first time
-$module = new ReportProductionCandidatesModule\ExternalModule\ExternalModule();
-if (!$module->check_stats_table_exists()) {
+$module = new ExternalModule();
+$tableExists = $module->check_stats_table_exists();
+
+if (!$tableExists) {
   $module->report_production_candidates_cron();
 }
 
@@ -37,19 +39,14 @@ $sql = "SELECT
           AND DATEDIFF(NOW(), redcap_projects.creation_time) > 30
           order by redcap_project_stats.saved_attribute_count desc";
 
-$result = ExternalModules::query($sql);
+  $externalModule = new ExternalModule();
+  $data = $externalModule->runSQL( $sql );
 
 //check if query was successful
-if(!$result) {
+if( !$data ) {
   echo "<p> Cannot generate report due to an internal database issue </p>";
   require_once APP_PATH_DOCROOT . 'ControlCenter/footer.php';
   exit(0);
-}
-
-//convert data from mysqli obj to an associative array
-$data = [];
-while ($row = $result->fetch_assoc()) {
-	$data[] = $row;
 }
 
 //start printing data table
