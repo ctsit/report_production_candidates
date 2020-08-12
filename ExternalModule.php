@@ -1,9 +1,11 @@
 <?php
 namespace ReportProductionCandidatesModule\ExternalModule;
 
-use ExternalModules\AbstractExternalModule;
-use ExternalModules\ExternalModules;
-use REDCap;
+use Exception;
+  use ExternalModules\AbstractExternalModule;
+
+  use mysqli_result;
+  use REDCap;
 
 define("TABLE_NAME", "redcap_project_stats");
 
@@ -27,15 +29,42 @@ class ExternalModule extends AbstractExternalModule {
     }
   }
 
+  /**
+   * runSQL
+   *
+   * @param       $sql
+   * @param false $single_object_result set in cause of translating single results as its own array
+   *
+   * @return bool|mixed
+   */
+  function runSQL( $sql, $single_object_result = false ) {
+
+    $result = $this->query( $sql );
+
+    if ( $result instanceof mysqli_result ) {
+      $result = $result->fetch_all( MYSQLI_ASSOC );
+      if ( $single_object_result && is_array($result) && count( $result ) == 1 ) {
+        $result = $result[0];
+      }
+    } elseif ( $result === true ) {
+      $result = true;
+    } else {
+      $result = false;
+    }
+    return $result;
+  }
+
   //checks if project stats table exists
   function check_stats_table_exists() {
-    $result = ExternalModules::query("SHOW TABLES LIKE '" . TABLE_NAME  . "'");
 
-    if(!$result) {
-      throw new Exception("cannot access database.");
+    $sql = "SHOW TABLES LIKE '" . TABLE_NAME . "'";
+    $result = $this->runSQL($sql);
+
+    if ( !is_array( $result ) ) {
+      throw new Exception( "cannot access database." );
     }
 
-    if($result->num_rows) {
+    if ( !empty( $result ) ) {
       return true;
     }
 
@@ -45,12 +74,16 @@ class ExternalModule extends AbstractExternalModule {
 
   //creates project_stats table
   private function create_stats_table() {
-    $result = ExternalModules::query("CREATE TABLE " . TABLE_NAME . " (
-                                        project_id int(10) PRIMARY KEY,
-                                        saved_attribute_count int(10) UNSIGNED,
-                                        last_user varchar(255))");
 
-    if (!$result) {
+    $sql = "CREATE TABLE " . TABLE_NAME . " (
+              project_id int(10) PRIMARY KEY,
+              saved_attribute_count int(10) UNSIGNED,
+              last_user varchar(255)) 
+              CHARACTER SET utf8mb4
+              COLLATE utf8mb4_unicode_ci";
+
+    $result = $this->runSQL($sql);
+    if (! $result ) {
       throw new Exception("cannot create " . TABLE_NAME . " table.");
     }
   }
@@ -58,20 +91,21 @@ class ExternalModule extends AbstractExternalModule {
 
   // make sure every project has a row in the stats table
   private function add_rows_to_stats_table() {
-     // insert the project_ids from the redcap_projects table into the TABLE_NAME only if they do not already exist in TABLE_NAME
-    $sql = "INSERT INTO " . TABLE_NAME . " (project_id) SELECT project_id FROM redcap_projects ON DUPLICATE KEY UPDATE redcap_project_stats.project_id = redcap_projects.project_id";
-    $result = ExternalModules::query($sql);
-  }
 
+    // insert the project_ids from the redcap_projects table into the TABLE_NAME only if they do not already exist in TABLE_NAME
+    $sql = "INSERT INTO " . TABLE_NAME . " (project_id) SELECT project_id FROM redcap_projects ON DUPLICATE KEY UPDATE redcap_project_stats.project_id = redcap_projects.project_id";
+    $result = $this->runSQL( $sql );
+  }
 
   //update project stats table with info from redcap_data
   private function update_saved_attribute_count_in_stats_table() {
-    $result = ExternalModules::query("update " . TABLE_NAME . " as ps
-      set saved_attribute_count =
-      (SELECT COUNT(*) FROM redcap_data as d where ps.project_id = d.project_id)");
 
-    if (!$result) {
-      throw new Exception("cannot update " . TABLE_NAME . " table.");
+    $sql = "update " . TABLE_NAME . " as ps
+      set saved_attribute_count =
+      (SELECT COUNT(*) FROM redcap_data as d where ps.project_id = d.project_id)";
+    $result = $this->runSQL( $sql );
+    if ( !$result ) {
+      throw new Exception( "cannot update " . TABLE_NAME . " table." );
     }
   }
 
@@ -79,26 +113,22 @@ class ExternalModule extends AbstractExternalModule {
   private function update_last_user_in_stats_table() {
     // Get list of project_ids so we can iterate on them
     $sql = "select project_id from redcap_projects";
-    $result = ExternalModules::query($sql);
+    $data = $this->runSQL($sql);
 
     //check if query was successful
-    if(!$result) {
+    if(!$data) {
       exit(0);
-    }
-
-    //convert data from mysqli obj to an associative array
-    $data = [];
-    while ($row = $result->fetch_assoc()) {
-      $data[] = $row;
     }
 
     foreach ($data as $project) {
       $pid = $project["project_id"];
+
       $log_event_table = method_exists('\REDCap', 'getLogEventTable') ? \REDCap::getLogEventTable($pid) : "redcap_log_event";
-      $result = ExternalModules::query("update " . TABLE_NAME . "
+      $sql = "update " . TABLE_NAME . "
         set last_user = (SELECT user FROM $log_event_table as el inner join
         redcap_user_rights as ur on el.user = ur.username and el.project_id = ur.project_id and ur.project_id=$pid
-        order by ts desc limit 1) where project_id = $pid;");
+        order by ts desc limit 1) where project_id = $pid;";
+      $result = $this->runSQL($sql);
 
       if (!$result) {
         throw new Exception("cannot update " . TABLE_NAME . " table.");
