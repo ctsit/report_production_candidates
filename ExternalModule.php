@@ -122,8 +122,10 @@ class ExternalModule extends AbstractExternalModule {
 
     foreach ($data as $project) {
       $pid = $project["project_id"];
+
+      $log_event_table = method_exists('\REDCap', 'getLogEventTable') ? \REDCap::getLogEventTable($pid) : "redcap_log_event";
       $sql = "update " . TABLE_NAME . "
-        set last_user = (SELECT user FROM redcap_log_event as el inner join
+        set last_user = (SELECT user FROM $log_event_table as el inner join
         redcap_user_rights as ur on el.user = ur.username and el.project_id = ur.project_id and ur.project_id=$pid
         order by ts desc limit 1) where project_id = $pid;";
       $result = $this->runSQL($sql);
