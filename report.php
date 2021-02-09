@@ -37,7 +37,7 @@ $sql = "SELECT
           AND DATEDIFF(NOW(), redcap_projects.creation_time) > 30
           order by redcap_project_stats.saved_attribute_count desc";
 
-$result = ExternalModules::query($sql);
+$result = ExternalModules::query($sql, []);
 
 //check if query was successful
 if(!$result) {
