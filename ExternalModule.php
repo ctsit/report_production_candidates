@@ -8,7 +8,6 @@ use REDCap;
 define("TABLE_NAME", "redcap_project_stats");
 
 class ExternalModule extends AbstractExternalModule {
-
   //main cron executed by redcap every day
   function report_production_candidates_cron() {
     try {
@@ -29,7 +28,7 @@ class ExternalModule extends AbstractExternalModule {
 
   //checks if project stats table exists
   function check_stats_table_exists() {
-    $result = ExternalModules::query("SHOW TABLES LIKE '" . TABLE_NAME  . "'");
+    $result = ExternalModules::query("SHOW TABLES LIKE '" . TABLE_NAME  . "'", []);
 
     if(!$result) {
       throw new Exception("cannot access database.");
@@ -48,7 +47,7 @@ class ExternalModule extends AbstractExternalModule {
     $result = ExternalModules::query("CREATE TABLE " . TABLE_NAME . " (
                                         project_id int(10) PRIMARY KEY,
                                         saved_attribute_count int(10) UNSIGNED,
-                                        last_user varchar(255))");
+                                        last_user varchar(255))", []);
 
     if (!$result) {
       throw new Exception("cannot create " . TABLE_NAME . " table.");
@@ -60,7 +59,7 @@ class ExternalModule extends AbstractExternalModule {
   private function add_rows_to_stats_table() {
      // insert the project_ids from the redcap_projects table into the TABLE_NAME only if they do not already exist in TABLE_NAME
     $sql = "INSERT INTO " . TABLE_NAME . " (project_id) SELECT project_id FROM redcap_projects ON DUPLICATE KEY UPDATE redcap_project_stats.project_id = redcap_projects.project_id";
-    $result = ExternalModules::query($sql);
+    $result = ExternalModules::query($sql, []);
   }
 
 
@@ -68,7 +67,7 @@ class ExternalModule extends AbstractExternalModule {
   private function update_saved_attribute_count_in_stats_table() {
     $result = ExternalModules::query("update " . TABLE_NAME . " as ps
       set saved_attribute_count =
-      (SELECT COUNT(*) FROM redcap_data as d where ps.project_id = d.project_id)");
+      (SELECT COUNT(*) FROM redcap_data as d where ps.project_id = d.project_id)", []);
 
     if (!$result) {
       throw new Exception("cannot update " . TABLE_NAME . " table.");
@@ -79,7 +78,7 @@ class ExternalModule extends AbstractExternalModule {
   private function update_last_user_in_stats_table() {
     // Get list of project_ids so we can iterate on them
     $sql = "select project_id from redcap_projects";
-    $result = ExternalModules::query($sql);
+    $result = ExternalModules::query($sql, []);
 
     //check if query was successful
     if(!$result) {
@@ -98,7 +97,7 @@ class ExternalModule extends AbstractExternalModule {
       $result = ExternalModules::query("update " . TABLE_NAME . "
         set last_user = (SELECT user FROM $log_event_table as el inner join
         redcap_user_rights as ur on el.user = ur.username and el.project_id = ur.project_id and ur.project_id=$pid
-        order by ts desc limit 1) where project_id = $pid;");
+        order by ts desc limit 1) where project_id = $pid;", []);
 
       if (!$result) {
         throw new Exception("cannot update " . TABLE_NAME . " table.");
