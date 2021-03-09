@@ -84,7 +84,7 @@
         }
     ],
     "compatibility": {
-        "redcap-version-min": "9.7.8",
+        "redcap-version-min": "9.5.0",
         "redcap-version-max": ""
    }
 }

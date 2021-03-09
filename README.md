@@ -3,7 +3,7 @@
 This REDCap module shows a list of REDCap projects that probably should be moved into production. It allows admins to contact owners of projects for follow up and provides optional support for the University of Florida's fork of Stanford University's <a href='https://github.com/ctsit/goprod'>Go to Prod module</a>.
 
 ## Prerequisites
-- REDCap >= 9.7.8
+- REDCap >= 9.5.0
 
 ## Easy Installation
 - Obtain this module from the Consortium [REDCap Repo](https://redcap.vanderbilt.edu/consortium/modules/index.php) from the control center.
