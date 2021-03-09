@@ -8,11 +8,6 @@ use REDCap;
 define("TABLE_NAME", "redcap_project_stats");
 
 class ExternalModule extends AbstractExternalModule {
-  function redcap_every_page_top($project_id) {
-    echo "hi";
-    self::check_stats_table_exists();
-  }
-
   //main cron executed by redcap every day
   function report_production_candidates_cron() {
     try {
