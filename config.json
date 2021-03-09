@@ -2,6 +2,9 @@
    "name": "Report Production Candidates",
    "namespace": "ReportProductionCandidatesModule\\ExternalModule",
    "description": "Show a list of REDCap projects that probably should be moved into production. Allow admins to contact owners of projects for follow up. Optional support for a fork of Stanford University's <a href='https://github.com/ctsit/goprod'>Go to Prod module</a>. See the complete <b><a href='https://github.com/ctsit/report_production_candidates' target='_blank'>documentation</a></b> at <a href='https://github.com/ctsit/report_production_candidates' target='_blank'>https://github.com/ctsit/report_production_candidates</a>.",
+   "permissions": [
+       "redcap_every_page_top"
+   ],
    "authors": [
         {
             "name": "Philip B. Chase",
@@ -81,7 +84,7 @@
         }
     ],
     "compatibility": {
-        "redcap-version-min": "8.0.3",
+        "redcap-version-min": "9.7.8",
         "redcap-version-max": ""
    }
 }
